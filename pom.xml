@@ -9,8 +9,8 @@
     <version>1.0.0</version>
     <packaging>pom</packaging>
     <modules>
-        <module>reporter</module>
-        <module>starter</module>
+        <module>flamingbird-reporter</module>
+        <module>flamingbird-reporter-spring-boot-starter</module>
     </modules>
 
     <properties>
@@ -19,4 +19,15 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>2.7.4</version> <!-- 指定 Spring Boot 版本 -->
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>
