@@ -1,0 +1,8 @@
+flamingbird:
+  reporter:
+    instances:
+      default:
+        name: default
+        url: https://www.baidu.com
+        type: feishu
+    enabled: true
