@@ -1,4 +1,4 @@
-package cn.flamingbird.reporter.autoconfigure;
+package cn.flamingbird.reporter;
 
 import lombok.Data;
 

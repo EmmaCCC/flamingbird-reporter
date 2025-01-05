@@ -4,7 +4,7 @@ import java.util.Map;
 
 public interface Reporter {
 
-    void sendErrorMessage(Exception e);
+    ReporterType getReporterType();
 
     void sendMessage(String summary, Map<String, String> map);
 

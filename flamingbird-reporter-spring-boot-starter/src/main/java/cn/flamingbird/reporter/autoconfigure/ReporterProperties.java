@@ -1,5 +1,6 @@
 package cn.flamingbird.reporter.autoconfigure;
 
+import cn.flamingbird.reporter.ReporterImpl;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

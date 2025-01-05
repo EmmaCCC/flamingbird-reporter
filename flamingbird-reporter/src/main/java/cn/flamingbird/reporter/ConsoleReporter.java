@@ -3,9 +3,10 @@ package cn.flamingbird.reporter;
 import java.util.Map;
 
 public class ConsoleReporter implements Reporter {
+
     @Override
-    public void sendErrorMessage(Exception e) {
-        e.printStackTrace();
+    public ReporterType getReporterType() {
+        return ReporterType.CONSOLE;
     }
 
     @Override

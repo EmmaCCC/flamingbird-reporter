@@ -17,6 +17,8 @@
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <hutool-all.version>5.8.16</hutool-all.version>
+        <spring-boot.version>2.7.4</spring-boot.version>
     </properties>
 
     <dependencyManagement>
@@ -24,9 +26,14 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
-                <version>2.7.4</version> <!-- 指定 Spring Boot 版本 -->
+                <version>${spring-boot.version}</version> <!-- 指定 Spring Boot 版本 -->
                 <scope>import</scope>
                 <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool-all.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
