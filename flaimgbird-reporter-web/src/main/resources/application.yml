@@ -6,3 +6,6 @@ flamingbird:
         url: https://open.feishu.cn/open-apis/bot/v2/hook/29cebec7-fe15-47ca-8809-8e5ba0f1061f
         type: feishu
     enabled: true
+spring:
+  main:
+    allow-bean-definition-overriding: true

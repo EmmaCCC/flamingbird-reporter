@@ -8,6 +8,7 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.Resource;
@@ -19,6 +20,11 @@ public class FlamingbirdReporterAutoConfiguration implements BeanFactoryPostProc
 
     @Resource
     private ReporterProperties reporterProperties;
+
+    @Bean
+    public Reporter reporter() {
+        return new ConsoleReporter();
+    }
 
     private Reporter createReporter(ReporterImpl instance) {
         // 根据配置创建不同类型的 Reporter 实例
@@ -37,6 +43,7 @@ public class FlamingbirdReporterAutoConfiguration implements BeanFactoryPostProc
 
     @Override
     public void postProcessBeanFactory(ConfigurableListableBeanFactory configurableListableBeanFactory) throws BeansException {
+        configurableListableBeanFactory.registerSingleton("errorReporter", new FeishuReporter("a", "s"));
         if (reporterProperties == null || reporterProperties.getInstances() == null) {
             return;
         }
