@@ -14,9 +14,15 @@ public class FeishuReporter implements Reporter {
     private final String url;
 
 
-    public FeishuReporter(String name, String url) {
-        this.name = name;
-        this.url = url;
+    public FeishuReporter(ReporterRegistry registry) {
+        this.name = registry.getName();
+        this.url = registry.getUrl();
+    }
+
+
+    @Override
+    public String getName() {
+        return this.name;
     }
 
     @Override
@@ -25,7 +31,7 @@ public class FeishuReporter implements Reporter {
     }
 
     @Override
-    public void sendMessage(String summary, Map<String, String> map) {
+    public void report(String summary, Map<String, String> map) {
         String content = summary;
         if (map != null && map.size() > 0) {
             StringBuilder stringBuilder = new StringBuilder();
@@ -34,10 +40,10 @@ public class FeishuReporter implements Reporter {
             }
             content = stringBuilder.toString();
         }
-        sendMessage(summary, content);
+        report(summary, content);
     }
 
-    public void sendMessage(String summary, String content) {
+    public void report(String summary, String content) {
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json; charset=UTF-8");
 

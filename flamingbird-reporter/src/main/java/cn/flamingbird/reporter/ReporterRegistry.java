@@ -3,7 +3,7 @@ package cn.flamingbird.reporter;
 import lombok.Data;
 
 @Data
-public class ReporterImpl {
+public class ReporterRegistry {
     private String name;
     private String url;
     private ReporterType type;

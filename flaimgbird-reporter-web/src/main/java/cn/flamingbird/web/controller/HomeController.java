@@ -1,6 +1,7 @@
 package cn.flamingbird.web.controller;
 
 import cn.flamingbird.reporter.Reporter;
+import cn.flamingbird.reporter.autoconfigure.ReporterManager;
 import cn.flamingbird.reporter.autoconfigure.ReporterProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.GenericApplicationContext;
@@ -14,12 +15,20 @@ import java.util.List;
 @RestController
 public class HomeController {
 
-    @Autowired
-//    @Qualifier("errorReporter")
-    Reporter reporter;
-
     @Resource
+    Reporter reporterMyFeishu;
+
+    @Autowired
     List<Reporter> reporters;
+
+    @Autowired
+    Reporter reporter1;
+    //
+//    @Autowired
+//    Reporter reporter2;
+//
+    @Autowired
+    ReporterManager reporterManager;
     @Resource
     ReporterProperties properties;
 
@@ -29,6 +38,8 @@ public class HomeController {
 
     @GetMapping("/")
     public ResponseEntity<?> index() {
+        reporterMyFeishu.report("测试", "测试错误");
+        reporterManager.getReporter("stock").report("库存", "库存预警");
         return ResponseEntity.ok(properties);
     }
 }

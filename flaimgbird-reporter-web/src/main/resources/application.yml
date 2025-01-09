@@ -1,9 +1,11 @@
 flamingbird:
   reporter:
     instances:
-      errorReporter:
-        name: errorReporter
-        url: https://open.feishu.cn/open-apis/bot/v2/hook/29cebec7-fe15-47ca-8809-8e5ba0f1061f
+      - name: error
+        url: https://open.feishu.cn/open-apis/bot/v2/hook/34dcdea9-608b-444d-b936-300da0486bee
+        type: feishu
+      - name: stock
+        url: https://open.feishu.cn/open-apis/bot/v2/hook/34dcdea9-608b-444d-b936-300da0486bee
         type: feishu
     enabled: true
 spring:
