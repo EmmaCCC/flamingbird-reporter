@@ -10,7 +10,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>cn.flamingbird</groupId>
-    <artifactId>flaimgbird-reporter-web</artifactId>
+    <artifactId>flamingbird-reporter-web</artifactId>
     <version>1.0.0</version>
 
     <properties>
