@@ -2,7 +2,8 @@ package cn.flamingbird.reporter.autoconfigure;
 
 import cn.flamingbird.reporter.ReportContext;
 import cn.flamingbird.reporter.ReportItems;
-import cn.flamingbird.reporter.ReporterFilter;
+import cn.flamingbird.reporter.ReporterInterceptor;
+import cn.flamingbird.reporter.ReporterRegistry;
 import cn.flamingbird.reporter.utils.HttpServletUtils;
 import cn.flamingbird.utils.HostEnvironment;
 import cn.hutool.core.exceptions.ExceptionUtil;
@@ -12,12 +13,17 @@ import cn.hutool.json.JSONUtil;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
-public class WebReporterFilter implements ReporterFilter {
+public class DefaultReporterInterceptor implements ReporterInterceptor {
 
     private final HostEnvironment hostEnvironment;
 
-    public WebReporterFilter(HostEnvironment hostEnvironment) {
+    public DefaultReporterInterceptor(HostEnvironment hostEnvironment) {
         this.hostEnvironment = hostEnvironment;
+    }
+
+    @Override
+    public boolean canUse(ReporterRegistry registry) {
+        return true;
     }
 
     @Override

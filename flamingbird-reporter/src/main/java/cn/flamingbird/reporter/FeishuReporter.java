@@ -44,7 +44,11 @@ public class FeishuReporter extends AbstractReporter {
             for (Map.Entry<String, String> entry : map.entrySet()) {
                 stringBuilder.append("**").append(entry.getKey()).append("**：").append(entry.getValue()).append("\n");
             }
-            content = stringBuilder.toString();
+            if (content == null) {
+                content = stringBuilder.toString();
+            } else {
+                content = content + "\n" + stringBuilder;
+            }
         }
         content = "<font color='" + registry.getColor() + "'>" + content + "</font><at id=all></at>";
 

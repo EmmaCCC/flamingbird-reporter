@@ -1,6 +1,8 @@
 package cn.flamingbird.reporter;
 
-public interface ReporterFilter {
+public interface ReporterInterceptor {
+
+    boolean canUse(ReporterRegistry registry);
 
     void beforeReport(ReportContext context);
 

@@ -1,7 +1,7 @@
 package cn.flamingbird.reporter.autoconfigure;
 
 import cn.flamingbird.reporter.Reporter;
-import cn.flamingbird.reporter.ReporterFilter;
+import cn.flamingbird.reporter.ReporterInterceptor;
 import cn.flamingbird.reporter.ReporterRegistry;
 import cn.flamingbird.utils.HostEnvironment;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
@@ -33,13 +33,13 @@ public class FlamingbirdReporterAutoConfiguration {
 
     private final ApplicationContext applicationContext;
 
-    private final List<ReporterFilter> reporterFilters;
+    private final List<ReporterInterceptor> reporterInterceptors;
 
     public FlamingbirdReporterAutoConfiguration(ReporterProperties reporterProperties,
                                                 ApplicationContext applicationContext,
-                                                List<ReporterFilter> reporterFilters) {
+                                                List<ReporterInterceptor> reporterInterceptors) {
         this.applicationContext = applicationContext;
-        this.reporterFilters = reporterFilters == null ? new ArrayList<>() : reporterFilters;
+        this.reporterInterceptors = reporterInterceptors == null ? new ArrayList<>() : reporterInterceptors;
         if (reporterProperties == null || reporterProperties.getInstances() == null
                 || reporterProperties.getInstances().isEmpty()) {
             throw new RuntimeException("reporterProperties is null or empty");
@@ -63,8 +63,7 @@ public class FlamingbirdReporterAutoConfiguration {
         List<ReporterRegistry> instances = reporterProperties.getInstances();
 
         HostEnvironment hostEnvironment = hostEnvironment();
-        reporterFilters.add(0, new WebReporterFilter(hostEnvironment));
-        instances.forEach(item -> item.setReporterFilters(reporterFilters));
+        reporterInterceptors.add(0, new DefaultReporterInterceptor(hostEnvironment));
 
         ReporterRegistry primary = reporterProperties.getDefaultInstance();
         if (primary == null) {
@@ -75,7 +74,12 @@ public class FlamingbirdReporterAutoConfiguration {
         if (primary == null) {
             primary = instances.stream().findFirst().get();
         }
-        primary.setReporterFilters(reporterFilters);
+
+        instances.add(0, primary);
+        instances.forEach(item -> {
+            List<ReporterInterceptor> interceptors = reporterInterceptors.stream().filter(interceptor -> interceptor.canUse(item)).collect(Collectors.toList());
+            item.setReporterInterceptors(interceptors);
+        });
 
         //遍历配置中的实例
         for (ReporterRegistry instance : instances) {

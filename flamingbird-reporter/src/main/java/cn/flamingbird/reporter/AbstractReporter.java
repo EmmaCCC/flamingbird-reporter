@@ -72,33 +72,33 @@ public class AbstractReporter implements Reporter {
 
     protected void doReport(ReportContext reportContext) {
         try {
-            this.doBeforeReportFilter(reportContext);
+            this.doBeforeReportInterceptor(reportContext);
             this.prepareReport(reportContext);
             this.executeReport(reportContext);
         } catch (Exception e) {
             reportContext.setException(e);
         } finally {
-            this.doAfterReportFilter(reportContext);
+            this.doAfterReportInterceptor(reportContext);
         }
 
     }
 
-    protected void doBeforeReportFilter(ReportContext reportContext) {
-        List<ReporterFilter> reporterFilters = registry.getReporterFilters();
-        if (reporterFilters != null) {
-            for (int i = 0; i < reporterFilters.size(); i++) {
-                ReporterFilter reporterFilter = reporterFilters.get(i);
-                reporterFilter.beforeReport(reportContext);
+    private void doBeforeReportInterceptor(ReportContext reportContext) {
+        List<ReporterInterceptor> reporterInterceptors = registry.getReporterInterceptors();
+        if (reporterInterceptors != null) {
+            for (int i = 0; i < reporterInterceptors.size(); i++) {
+                ReporterInterceptor reporterInterceptor = reporterInterceptors.get(i);
+                reporterInterceptor.beforeReport(reportContext);
             }
         }
     }
 
-    protected void doAfterReportFilter(ReportContext reportContext) {
-        List<ReporterFilter> reporterFilters = registry.getReporterFilters();
-        if (reporterFilters != null) {
-            for (int i = reporterFilters.size() - 1; i >= 0; i--) {
-                ReporterFilter reporterFilter = reporterFilters.get(i);
-                reporterFilter.afterReport(reportContext);
+    private void doAfterReportInterceptor(ReportContext reportContext) {
+        List<ReporterInterceptor> reporterInterceptors = registry.getReporterInterceptors();
+        if (reporterInterceptors != null) {
+            for (int i = reporterInterceptors.size() - 1; i >= 0; i--) {
+                ReporterInterceptor reporterInterceptor = reporterInterceptors.get(i);
+                reporterInterceptor.afterReport(reportContext);
             }
         }
     }
