@@ -1,5 +1,6 @@
 package cn.flamingbird.reporter;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 public interface Reporter {
@@ -12,6 +13,16 @@ public interface Reporter {
 
     void report(String summary, String content);
 
+    void report(Throwable throwable, HttpServletRequest request);
+
+    default void report(Throwable throwable) {
+        report(throwable, null);
+    }
+
+    default void report(HttpServletRequest request) {
+        report(null, request);
+    }
+
     static Reporter createReporter(ReporterRegistry instance) {
         // 根据配置创建不同类型的 Reporter 实例
         switch (instance.getType()) {
@@ -22,7 +33,7 @@ public interface Reporter {
             case WORKWX:
                 return null;
             default:
-                return new ConsoleReporter(); // 假设 ConsoleReporter 构造函数需要参数
+                return new ConsoleReporter(instance); // 假设 ConsoleReporter 构造函数需要参数
         }
     }
 }

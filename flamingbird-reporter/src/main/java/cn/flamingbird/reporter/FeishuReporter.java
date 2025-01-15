@@ -8,13 +8,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class FeishuReporter implements Reporter {
+public class FeishuReporter extends AbstractReporter {
 
     private final String name;
     private final String url;
 
 
     public FeishuReporter(ReporterRegistry registry) {
+        super(registry);
         this.name = registry.getName();
         this.url = registry.getUrl();
     }
@@ -30,9 +31,14 @@ public class FeishuReporter implements Reporter {
         return ReporterType.FEISHU;
     }
 
+
     @Override
-    public void report(String summary, Map<String, String> map) {
-        String content = summary;
+    protected void prepareReport(ReportContext reportContext) {
+
+        String summary = reportContext.getSummary();
+        String content = reportContext.getContent();
+        Map<String, String> map = reportContext.getMap();
+
         if (map != null && map.size() > 0) {
             StringBuilder stringBuilder = new StringBuilder();
             for (Map.Entry<String, String> entry : map.entrySet()) {
@@ -40,12 +46,7 @@ public class FeishuReporter implements Reporter {
             }
             content = stringBuilder.toString();
         }
-        report(summary, content);
-    }
-
-    public void report(String summary, String content) {
-        Map<String, String> headers = new HashMap<>();
-        headers.put("Content-Type", "application/json; charset=UTF-8");
+        content = "<font color='" + registry.getColor() + "'>" + content + "</font><at id=all></at>";
 
         HashMap<String, Object> card = new HashMap<>();
 
@@ -53,7 +54,7 @@ public class FeishuReporter implements Reporter {
         HashMap<String, String> title = new HashMap<>();
         title.put("tag", "plain_text");
         title.put("content", summary);
-        header.put("template", "red");
+        header.put("template", registry.getColor());
         header.put("title", title);
 
 
@@ -70,10 +71,21 @@ public class FeishuReporter implements Reporter {
         HashMap<String, Object> msg = new HashMap<>();
         msg.put("msg_type", "interactive");
         msg.put("card", card);
-        String body = JSONUtil.toJsonStr(msg);
+
+        reportContext.setReportRequest(msg);
+
+    }
+
+    @Override
+    protected void executeReport(ReportContext reportContext) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Content-Type", "application/json; charset=UTF-8");
+
+        String body = JSONUtil.toJsonStr(reportContext.getReportRequest());
         try (HttpResponse response = HttpRequest.post(url)
                 .addHeaders(headers).body(body, "application/json").execute()) {
             String res = response.body();
+            reportContext.setReportResponse(res);
         }
     }
 

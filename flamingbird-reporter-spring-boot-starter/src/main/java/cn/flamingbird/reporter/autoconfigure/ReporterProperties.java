@@ -10,7 +10,13 @@ import java.util.List;
 @ConfigurationProperties("flamingbird.reporter")
 public class ReporterProperties {
 
-    private boolean enabled;
     //    private Map<String, ReporterRegistry> instances;
     private List<ReporterRegistry> instances;
+
+
+    private ReporterRegistry defaultInstance;
+
+    public void setDefault(ReporterRegistry defaultInstance) {
+        this.defaultInstance = defaultInstance;
+    }
 }

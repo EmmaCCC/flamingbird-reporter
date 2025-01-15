@@ -1,15 +1,27 @@
 flamingbird:
   reporter:
+    default:
+      name: default
+      url: https://open.feishu.cn/open-apis/bot/v2/hook/34dcdea9-608b-444d-b936-300da0486bee
+      type: feishu
+      color: wathet
     instances:
       - name: error
         url: https://open.feishu.cn/open-apis/bot/v2/hook/34dcdea9-608b-444d-b936-300da0486bee
         type: feishu
+        color: wathet
       - name: stock
         url: https://open.feishu.cn/open-apis/bot/v2/hook/34dcdea9-608b-444d-b936-300da0486bee
         type: feishu
-    enabled: true
+
 spring:
   main:
     allow-bean-definition-overriding: true
+  application:
+    name: reporter-web
+  profiles:
+    active: dev
 server:
   port: 4396
+
+
