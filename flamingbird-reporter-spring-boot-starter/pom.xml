@@ -35,7 +35,7 @@
         <dependency>
             <groupId>cn.flamingbird</groupId>
             <artifactId>flamingbird-reporter</artifactId>
-            <version>${parent.version}</version>
+            <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
