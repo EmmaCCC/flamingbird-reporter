@@ -65,7 +65,7 @@ public class FlamingbirdReporterAutoConfiguration {
         HostEnvironment hostEnvironment = hostEnvironment();
         reporterInterceptors.add(0, new DefaultReporterInterceptor(hostEnvironment));
 
-        ReporterRegistry primary = reporterProperties.getDefaultInstance();
+        ReporterRegistry primary = reporterProperties.getPrimary();
         if (primary == null) {
             primary = instances
                     .stream().filter(item -> Objects.equals(item.getName(), "default"))

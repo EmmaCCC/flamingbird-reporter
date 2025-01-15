@@ -1,7 +1,7 @@
 flamingbird:
   reporter:
-    default:
-      name: default
+    primary:
+      name: primary
       url: https://open.feishu.cn/open-apis/bot/v2/hook/34dcdea9-608b-444d-b936-300da0486bee
       type: feishu
       color: wathet

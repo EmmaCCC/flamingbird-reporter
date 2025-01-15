@@ -10,13 +10,8 @@ import java.util.List;
 @ConfigurationProperties("flamingbird.reporter")
 public class ReporterProperties {
 
-    //    private Map<String, ReporterRegistry> instances;
     private List<ReporterRegistry> instances;
 
+    private ReporterRegistry primary;
 
-    private ReporterRegistry defaultInstance;
-
-    public void setDefault(ReporterRegistry defaultInstance) {
-        this.defaultInstance = defaultInstance;
-    }
 }
